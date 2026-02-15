@@ -80,7 +80,7 @@ const AboutTitle = () => (
 )
 
 export default class About extends React.Component {
-  state = { hide: false }
+  state = { hide: true }
 
   onHide = () => {
     this.setState({ hide: true })

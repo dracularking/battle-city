@@ -25,6 +25,48 @@ export function calculateBulletStartPosition({
   }
 }
 
+// 计算激光的结束位置和长度
+export function calculateLaserEndPosition({
+  x,
+  y,
+  direction,
+}: {
+  x: number
+  y: number
+  direction: Direction
+}) {
+  if (direction === 'up') {
+    return { endX: x, endY: 0, length: y }
+  } else if (direction === 'down') {
+    return { endX: x, endY: FIELD_SIZE, length: FIELD_SIZE - y }
+  } else if (direction === 'left') {
+    return { endX: 0, endY: y, length: x }
+  } else {
+    // right
+    return { endX: FIELD_SIZE, endY: y, length: FIELD_SIZE - x }
+  }
+}
+
+// 获取激光路径的矩形区域（用于碰撞检测）
+export function getLaserPathRect(
+  x: number,
+  y: number,
+  direction: Direction,
+  length: number,
+): Rect {
+  const thickness = 3 // 激光粗细
+  if (direction === 'up') {
+    return { x, y: y - length, width: thickness, height: length }
+  } else if (direction === 'down') {
+    return { x, y, width: thickness, height: length }
+  } else if (direction === 'left') {
+    return { x: x - length, y, width: length, height: thickness }
+  } else {
+    // right
+    return { x, y, width: length, height: thickness }
+  }
+}
+
 export function between(min: number, value: number, max: number, threshhold = 0) {
   return min - threshhold <= value && value <= max + threshhold
 }

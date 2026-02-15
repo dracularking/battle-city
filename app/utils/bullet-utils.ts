@@ -76,6 +76,26 @@ export class BulletCollisionInfo extends DefaultMap<BulletId, Collision[]> {
     return false
   }
 
+  private isLaserBulletCollision(bulletId: BulletId, collisions: Collision[]) {
+    const bullet = this.bullets.get(bulletId)
+    if (bullet == null) {
+      return false
+    }
+    for (const c of collisions) {
+      if (c.type !== 'bullet') {
+        continue
+      }
+      const other = this.bullets.get(c.otherBulletId)
+      if (other == null) {
+        continue
+      }
+      if (bullet.bulletType === 'laser' || other.bulletType === 'laser') {
+        return true
+      }
+    }
+    return false
+  }
+
   getExplosionSoundName(bulletId: BulletId): SoundName {
     const bullet = this.bullets.get(bulletId)
     if (bullet.side === 'player') {
@@ -93,7 +113,9 @@ export class BulletCollisionInfo extends DefaultMap<BulletId, Collision[]> {
   getExplosionPos(bulletId: BulletId): Point {
     const collisions = this.get(bulletId)
     const bullet = this.bullets.get(bulletId)
-    if (!BulletCollisionInfo.shouldExplode(collisions)) {
+    const shouldExplode =
+      BulletCollisionInfo.shouldExplode(collisions) || this.isLaserBulletCollision(bulletId, collisions)
+    if (!shouldExplode) {
       return null
     }
     const collisionRects = collisions.map(BulletCollisionInfo.getCollisionRect)

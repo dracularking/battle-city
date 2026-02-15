@@ -1,5 +1,7 @@
 import { Record } from 'immutable'
 
+export type BulletType = 'normal' | 'laser'
+
 const BulletRecordBase = Record({
   bulletId: 0 as BulletId,
   // 子弹的方向
@@ -22,6 +24,12 @@ const BulletRecordBase = Record({
   side: 'player' as Side,
   // 发射子弹的玩家
   playerName: null as PlayerName,
+  // 子弹类型: normal(普通子弹) | laser(激光)
+  bulletType: 'normal' as BulletType,
+  // 激光长度(仅激光类型使用)
+  laserLength: 0,
+  // 激光持续时间(帧数)
+  laserDuration: 0,
 })
 
 export default class BulletRecord extends BulletRecordBase {
