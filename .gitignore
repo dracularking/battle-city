@@ -4,3 +4,6 @@ dist/
 npm-debug.log*
 node_modules/
 .vscode
+release*/
+electron-cache/
+.history/
