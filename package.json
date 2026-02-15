@@ -3,9 +3,12 @@
   "version": "0.4.0-SNAPSHOT",
   "description": "Battle city remake built with react.",
   "author": "Shi Feichao <842351815@qq.com> (https://shinima.github.io)",
+  "main": "electron/main.js",
   "scripts": {
     "start": "webpack-dev-server --mode=development",
-    "build": "webpack --mode=production && copyfiles sound/* dist"
+    "build": "webpack --mode=production && copyfiles sound/* dist",
+    "electron": "electron .",
+    "electron:build": "yarn build && electron-builder --win"
   },
   "dependencies": {
     "@types/history": "^4.6.2",
@@ -44,10 +47,15 @@
     "babel-core": "^6.26.0",
     "babel-loader": "7",
     "css-loader": "^1.0.0",
+    "electron": "^40.4.1",
+    "electron-builder": "26.7.0",
     "html-webpack-plugin": "^3.0.6",
+    "ico": "^0.3.3",
     "json-loader": "^0.5.7",
     "moment": "^2.21.0",
+    "png-to-ico": "^3.0.1",
     "prettier": "^1.11.1",
+    "sharp": "^0.34.5",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.23.0",
     "ts-loader": "^5.1.0",
@@ -64,6 +72,44 @@
     "semi": false,
     "singleQuote": true,
     "trailingComma": "all"
+  },
+  "build": {
+    "appId": "com.battle-city.game",
+    "productName": "坦克大战",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "dist/**/*",
+      "resources/icon.ico"
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "resources/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "resources/icon.ico",
+      "uninstallerIcon": "resources/icon.ico",
+      "installerHeaderIcon": "resources/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "坦克大战",
+      "deleteAppDataOnUninstall": true
+    },
+    "electronDownload": {
+      "cache": "./electron-cache"
+    }
   },
   "packageManager": "yarn@4.9.1"
 }

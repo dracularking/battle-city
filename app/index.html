@@ -8,6 +8,28 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Battle City</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+    #container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #container > div {
+      transform: scale(2);
+      transform-origin: center center;
+    }
     .github-corner:hover .octo-arm {
       animation: octocat-wave 560ms ease-in-out
     }
