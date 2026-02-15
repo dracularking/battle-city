@@ -7,3 +7,4 @@ node_modules/
 release*/
 electron-cache/
 .history/
+nul
